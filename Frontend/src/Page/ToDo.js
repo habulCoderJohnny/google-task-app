@@ -7,7 +7,7 @@ const ToDo = () => {
     const { id } = useParams();
     const [goal, setGoal] = useState([]);
     useEffect(() => {
-        fetch('http://localhost:5000/showToDoList')
+        fetch('https://daily-task-db.herokuapp.com/showToDoList')
             .then(res => res.json())
             .then(data => setGoal(data))
     }, []);
@@ -22,7 +22,7 @@ const ToDo = () => {
             reTask: event.target.reTask.value
         }
         event.target.reset();
-        const url =  `http://localhost:5000/update/${id}`;
+        const url =  `https://daily-task-db.herokuapp.com/update/${id}`;
 
         fetch(url, {
             method: 'PUT',
@@ -42,9 +42,9 @@ const ToDo = () => {
     }
 
     const handleComplete = id => {
-        const confirmation = window.confirm('do u complete the task');
+        const confirmation = window.confirm('Do YOU Complete The task?');
         if (confirmation) {
-            fetch(`http://localhost:5000/taskComplete/${id}`, {
+            fetch(`https://daily-task-db.herokuapp.com/taskComplete/${id}`, {
                 method: 'DELETE',
             })
                 .then(res => res.json())

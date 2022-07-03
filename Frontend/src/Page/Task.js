@@ -3,7 +3,9 @@ import { toast } from 'react-toastify';
 import { DayPicker } from 'react-day-picker';
 import 'react-day-picker/dist/style.css';
 import { format } from 'date-fns';
+import { useNavigate } from 'react-router-dom';
 const Task = () => {
+    const navigate = useNavigate();
     const [selected, setSelected] = useState(new Date());
     let footer = <p>Please pick a your task day.</p>;
     if (selected) {
@@ -22,7 +24,7 @@ const Task = () => {
         }
         event.target.reset();
         //its time to Fetch for SENT data to server
-        fetch('http://localhost:5000/deadline', {
+        fetch('https://daily-task-db.herokuapp.com/deadline', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -33,11 +35,13 @@ const Task = () => {
             .then(data => {
                 if (data.acknowledged) {
                     toast.success(`'${tasks}  'Task Set on '${formattedDate}'`)
+                    navigate('/to-do-list')
                 }
                 else {
                     toast.error('Set task failed')
                 }
             });
+
     }
     return (
         <div className='hero-content flex-col lg:flex-row gap-6'>

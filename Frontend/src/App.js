@@ -10,7 +10,6 @@ function App() {
   return (
     <div>
  <Navbar></Navbar>
-
       <Routes>
         <Route path="" element={<Task/>} />
         <Route path="task" element={<Task/>} />
