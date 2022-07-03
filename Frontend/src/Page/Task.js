@@ -1,8 +1,15 @@
-import React from 'react';
+import React, { useState }  from 'react';
 import { toast } from 'react-toastify';
-import Calander from './Calander';
-
+import { DayPicker } from 'react-day-picker';
+import 'react-day-picker/dist/style.css';
+import { format } from 'date-fns';
 const Task = () => {
+    const [selected, setSelected] = useState(new Date());
+    let footer = <p>Please pick a your task day.</p>;
+    if (selected) {
+        footer = <p>You Task on <span className="text-2xl font-bold text-pink-500">{format(selected, 'PP')}</span></p>;
+      }
+      const formattedDate = format(selected , 'PP');
 
     const handleTask = event => {
         event.preventDefault();
@@ -10,6 +17,7 @@ const Task = () => {
         console.log(tasks)
 
         const setGoal = {
+            date: formattedDate,
             tasks: event.target.tasks.value
         }
         event.target.reset();
@@ -24,7 +32,7 @@ const Task = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.acknowledged) {
-                    toast.success('Task added!')
+                    toast.success(`'${tasks}  'Task Set on '${formattedDate}'`)
                 }
                 else {
                     toast.error('Set task failed')
@@ -32,19 +40,34 @@ const Task = () => {
             });
     }
     return (
-        <div className='flex justify-center gap-6'>
+        <div className='hero-content flex-col lg:flex-row gap-6'>
             <div>
             <h1 className='stat-value text-secondary m-4 text-center'>Today Your Goal</h1>
              <form onSubmit={handleTask} className='grid grid-cols-1 gap-4 justify-items-center my-5 text-secondary'>
             <div className="form-control">
               </div>
+              <input type="text" value={format(selected, 'PP')} disabled className="input input-bordered w-full max-w-xs" />
                 <input type="text" name='tasks' required
-                    placeholder="Set your tasks" className="input input-bordered" />
+                    placeholder="Set your tasks" className="input input-bordered w-full max-w-xs" />
                 <input type="submit" value="Set" className="btn btn-secondary text-white" />
 
             </form>
             </div>
-            <Calander></Calander>
+
+            {/* DayPicker */}
+                        
+            <div>
+                <DayPicker
+                mode='single'
+                selected={selected}
+                onSelect={setSelected}
+                footer={footer}
+                styles={{
+                    caption: { color: 'red' }
+                  }}
+                />
+                </div>
+        
         </div>
     );
 };

@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-import Calander from "./Page/Calander";
 import Task from "./Page/Task";
 import ToDo from "./Page/ToDo";
 import Navbar from "./Navbar";
@@ -15,8 +14,7 @@ function App() {
       <Routes>
         <Route path="" element={<Task/>} />
         <Route path="task" element={<Task/>} />
-        <Route path="todo" element={<ToDo/>} />
-        <Route path="calander" element={<Calander/>} />
+        <Route path="to-do-list" element={<ToDo/>} />
       </Routes>
       <ToastContainer></ToastContainer> 
     </div>
