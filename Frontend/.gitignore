@@ -1,6 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
-# dependencies
+#dependencies
 /node_modules
 /.pnp
 .pnp.js
@@ -25,6 +25,7 @@ yarn-error.log*
 # package-lock.json
 # # package.json
 # tailwind.config.js
-setupTests.js
-reportWebVitals.js
-App.test.js
+# setupTests.js
+# # reportWebVitals.js
+# App.test.js
+# # public
