@@ -41,7 +41,7 @@ const ToDo = () => {
 
     }
 
-    const handleComplete = id => {
+    const handleComplete = (id, finishedTask) => {
         const confirmation = window.confirm('Do YOU Complete The task?');
         if (confirmation) {
             fetch(`https://daily-task-db.herokuapp.com/taskComplete/${id}`, {
@@ -50,10 +50,14 @@ const ToDo = () => {
                 .then(res => res.json())
                 .then(data => {
                     if (data.acknowledged) {
-                        toast.success('Welldone Task Complete successfully!')
+                        toast.success(`“${finishedTask}” Task Complete successfully!`)
                         const remaining = goal.filter(t => t._id !== id);
                         setGoal(remaining);
-                    }
+                        const deletedData = finishedTask; 
+                        localStorage.setItem('completed Task:', deletedData);
+                        // localStorage.getItem(deletedData);
+                        // console.log(deletedData);
+                    } 
 
                     else {
                         toast.error('failed')
@@ -62,6 +66,7 @@ const ToDo = () => {
                 });
 
         }
+   
 
     }
 
@@ -72,7 +77,7 @@ const ToDo = () => {
             {
                 goal.map((task,index )=>
                     <div key={task._id} className="font-bold text-xl my-2"> <span className="text-green-500 text-2xl">{index + 1}.</span> {task.tasks}
-                    <span className="text-red-500 text-2xl"> On {task.date}</span><button onClick={() => handleComplete(task._id)} className='btn btn-outline btn-sm ml-3'><FontAwesomeIcon className="text-white" icon={faCircleCheck} />Complete</button>
+                    <span className="text-red-500 text-2xl"> On {task.date}</span><button onClick={() => handleComplete(task._id, task.tasks)} className='btn btn-outline btn-sm ml-3'><FontAwesomeIcon className="text-white" icon={faCircleCheck} />Complete</button>
                     </div>
                 )
             }
@@ -89,7 +94,7 @@ const ToDo = () => {
                         </h3>
                         <form onSubmit={handleUpdateTask} className='grid grid-cols-1 gap-4 justify-items-center'>
 
-                            {goal.map(task => <div> <input defaultValue={task.tasks}
+                            {goal.map(task => <div key={task._id}> <input defaultValue={task.tasks}
                                 type="text" name='reTask' className="input input-bordered w-full max-w-xs" required />
                                 </div>
                             )}

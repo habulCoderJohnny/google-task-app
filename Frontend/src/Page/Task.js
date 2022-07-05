@@ -34,7 +34,7 @@ const Task = () => {
             .then(res => res.json())
             .then(data => {
                 if (data.acknowledged) {
-                    toast.success(`'${tasks}  'Task Set on '${formattedDate}'`)
+                    toast.success(`“${tasks}”  Task Set on “${formattedDate}”`)
                     navigate('/to-do-list')
                 }
                 else {
